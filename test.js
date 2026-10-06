@@ -13,19 +13,24 @@ function makeEl(id) {
   return {
     id, textContent: "", innerHTML: "", value: "", placeholder: "",
     className: "", children: [], dataset: {}, type: "",
+    hidden: false,
     classList: { add() {}, remove() {} },
     addEventListener(type, fn) { (this._h = this._h || {})[type] = fn; },
     append(...c) { this.children.push(...c); },
     appendChild(c) { this.children.push(c); },
     querySelectorAll() { return []; },
     closest() { return this; },
+    showModal() { this._opened = true; },
+    close() { this._opened = false; },
   };
 }
 const els = {};
 const getEl = (id) => (els[id] = els[id] || makeEl(id));
 global.document = { getElementById: getEl, createElement: (t) => makeEl(t) };
-global.window = { addEventListener() {} };
+const winHandlers = {};
+global.window = { addEventListener(type, fn) { (winHandlers[type] = winHandlers[type] || []).push(fn); } };
 global.self = global;
+global.matchMedia = () => ({ matches: false });
 
 /* ---------- load the real app.js and grab its internals ---------- */
 const appPath = path.join(__dirname, "app.js");
@@ -142,7 +147,45 @@ eq(prec.purgeLabel, "0.04500", "purge label shows 5 decimals");
 const prec2 = compute("lpgair", "u16g10", { cu15: 4 }); // IVt 0.025616 -> purge 0.038424
 eq(prec2.purgeLabel, "0.03842", "LPG/Air purge not truncated (0.038424 -> 0.03842)");
 
+/* 13) Install button flow */
+const installBtn = getEl("install");
+const helpDlg = getEl("install-help");
+
+// iOS-style: no beforeinstallprompt fired -> clicking opens the help dialog
+installBtn._h.click();
+eq(helpDlg._opened, true, "without install prompt: click opens help dialog");
+getEl("install-help-close")._h.click();
+eq(helpDlg._opened, false, "close button closes help dialog");
+
+// Android/Chrome-style: beforeinstallprompt fires -> button shown, click calls prompt()
+let promptCalled = 0;
+let promptPrevented = false;
+const deferred = {
+  prompt() { promptCalled++; },
+  userChoice: Promise.resolve({ outcome: "accepted" }),
+};
+const bip = { preventDefault() { promptPrevented = true; }, ...deferred };
+for (const fn of winHandlers.beforeinstallprompt || []) fn(bip);
+eq(installBtn.hidden, false, "beforeinstallprompt: button unhidden");
+installBtn._h.click();
+eq(promptCalled, 1, "click with deferred prompt: native prompt() called");
+eq(promptPrevented, true, "beforeinstallprompt: default prevented (no browser popup)");
+
+// After the user accepts, the button hides once the choice settles
+deferred.userChoice.then(() => {
+  eq(installBtn.hidden, true, "after acceptance: button hidden");
+
+  // appinstalled (e.g. iOS manual install) also hides the button
+  installBtn.hidden = false;
+  for (const fn of winHandlers.appinstalled || []) fn();
+  eq(installBtn.hidden, true, "appinstalled: button hidden");
+
+  report();
+});
+
 /* ---------- report ---------- */
-console.log(`${pass} checks passed, ${failures.length} failed`);
-for (const f of failures) console.log("FAIL:", f);
-process.exit(failures.length ? 1 : 0);
+function report() {
+  console.log(`${pass} checks passed, ${failures.length} failed`);
+  for (const f of failures) console.log("FAIL:", f);
+  process.exit(failures.length ? 1 : 0);
+}

@@ -273,6 +273,50 @@ function wire() {
     }
     setTimeout(() => ($("copy").textContent = "Copy Results"), 1500);
   });
+
+  wireInstall();
+}
+
+function wireInstall() {
+  const btn = $("install");
+  const dlg = $("install-help");
+  let deferred = null;
+
+  const isStandalone =
+    matchMedia("(display-mode: standalone)").matches ||
+    navigator.standalone === true;
+
+  // Browsers fire this when the app becomes installable (Chrome/Edge/Android).
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferred = e;
+    btn.hidden = false;
+  });
+
+  window.addEventListener("appinstalled", () => {
+    btn.hidden = true;
+    deferred = null;
+  });
+
+  btn.addEventListener("click", () => {
+    if (deferred) {
+      deferred.prompt();
+      deferred.userChoice.then((choice) => {
+        if (choice.outcome === "accepted") {
+          btn.hidden = true;
+          deferred = null;
+        }
+      });
+    } else {
+      // iOS Safari / non-promptable browsers: show the manual steps.
+      if (typeof dlg.showModal === "function") dlg.showModal();
+    }
+  });
+
+  $("install-help-close").addEventListener("click", () => dlg.close());
+
+  // Hide the prompt once it's installed (covers iOS manual installs).
+  if (isStandalone) btn.hidden = true;
 }
 
 /* ----------------------------- PWA -------------------------------- */

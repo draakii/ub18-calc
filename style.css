@@ -58,7 +58,7 @@ main {
   grid-template-columns: repeat(3, 1fr);
   gap: 6px;
 }
-.segmented button, .ghost, #copy {
+.segmented button, .ghost, #copy, #install {
   font: inherit;
   font-size: 13.5px;
   border-radius: 10px;
@@ -169,8 +169,39 @@ footer {
   gap: 10px;
   padding: 4px 2px 0;
 }
-#copy { font-size: 13px; padding: 8px 14px; }
+.copy-row { display: flex; justify-content: flex-end; margin-top: 10px; }
+#copy, #install { font-size: 13px; padding: 8px 14px; }
+#install {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+#install:hover { filter: brightness(1.08); }
 .foot-note { font-size: 11px; color: var(--muted); }
+
+/* Install help dialog (iOS) */
+#install-help {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 18px 16px;
+  font: inherit;
+  color: var(--ink);
+  max-width: 340px;
+  width: calc(100% - 32px);
+}
+#install-help::backdrop { background: rgba(15, 23, 42, 0.45); }
+#install-help h3 { margin: 0 0 8px; font-size: 16px; }
+#install-help p { margin: 0 0 10px; font-size: 13.5px; color: var(--muted); }
+#install-help ol { margin: 0 0 14px; padding-left: 20px; font-size: 13.5px; line-height: 1.7; }
+#install-help .ghost { width: 100%; }
+#install-help .ico {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  vertical-align: -2px;
+  color: var(--accent);
+}
 .credit {
   text-align: center;
   font-size: 12px;

@@ -60,10 +60,11 @@ purge are reported as *not applicable*.
 2. **Meter type** — E6/G4, U6/G4, or U16/G10.
 3. **Pipe lengths** — enter the metres run in each size (blank = 0).
 4. Read the **installation volumes** and the **results** card.
-5. **Copy Results** puts a summary on the clipboard to paste into a report.
+5. **Copy Results** (under the results) puts a summary on the clipboard.
+6. **Install App** (footer) installs it to the home screen — the native
+   prompt on Android/desktop, or a short how-to on iPhone.
 
-The app works offline and can be installed to a phone or desktop home screen
-("Add to Home Screen" / "Install app").
+The app works offline once loaded.
 
 ---
 
@@ -87,7 +88,7 @@ natural-gas purge rounding:
 
 ```bash
 node test.js
-# 57 checks passed, 0 failed
+# 64 checks passed, 0 failed
 ```
 
 Run it with any Node.js runtime — nothing else is required.

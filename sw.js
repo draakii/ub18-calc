@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE = "up1b-calc-v1";
+const CACHE = "up1b-calc-v2";
 const ASSETS = [
   "./",
   "index.html",
