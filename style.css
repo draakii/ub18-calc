@@ -203,10 +203,11 @@ footer {
   color: var(--accent);
 }
 .text-danger { color: #dc3545; }
-.credit .fas { font-size: 0.95em; }
 .credit {
   text-align: center;
   font-size: 12px;
   color: var(--muted);
-  margin: 14px 0 4px;
+  margin: 22px 0 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
 }
