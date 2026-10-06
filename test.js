@@ -147,6 +147,13 @@ eq(prec.purgeLabel, "0.04500", "purge label shows 5 decimals");
 const prec2 = compute("lpgair", "u16g10", { cu15: 4 }); // IVt 0.025616 -> purge 0.038424
 eq(prec2.purgeLabel, "0.03842", "LPG/Air purge not truncated (0.038424 -> 0.03842)");
 
+/* 12b) HTML structure — credit line must be a sibling of </footer>, not inside it */
+const html = fs.readFileSync(path.join(__dirname, "index.html"), "utf8");
+const footerOpen = html.indexOf("<footer>");
+const footerClose = html.indexOf("</footer>");
+const creditIdx = html.indexOf('class="credit"');
+eq(footerClose > footerOpen, true, "footer has a closing tag");
+eq(creditIdx > footerClose, true, "credit is OUTSIDE footer (own line)");
 /* 13) Install button flow */
 const installBtn = getEl("install");
 const helpDlg = getEl("install-help");
