@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE = "up1b-calc-v3";
+const CACHE = "up1b-calc-v4";
 const ASSETS = [
   "./",
   "index.html",
@@ -30,21 +30,41 @@ self.addEventListener("activate", (e) => {
   );
 });
 
-// Cache-first with network fallback; cache successful GETs for offline use.
 self.addEventListener("fetch", (e) => {
   if (e.request.method !== "GET") return;
+  const url = new URL(e.request.url);
+
+  // Never intercept the service worker script itself — the browser must
+  // always be able to see new bytes over the network to update us.
+  if (url.pathname.endsWith("sw.js")) return;
+
+  // Page loads: network-first so new deploys reach users immediately.
+  // Cache is only the offline fallback.
+  if (e.request.mode === "navigate") {
+    e.respondWith(
+      fetch(e.request)
+        .then((res) => {
+          if (res.ok) {
+            const clone = res.clone();
+            caches.open(CACHE).then((c) => c.put(e.request, clone));
+          }
+          return res;
+        })
+        .catch(() => caches.match(e.request).then((r) => r || caches.match("./")))
+    );
+    return;
+  }
+
+  // Static assets (own files + Font Awesome CDN): cache-first with
+  // background re-cache so they self-heal after a deploy.
   e.respondWith(
     caches.match(e.request)
       .then((cached) => {
         const fetched = fetch(e.request)
           .then((res) => {
-            if (res.ok) {
-              const u = new URL(e.request.url);
-              // Cache own files + the Font Awesome CDN (css + font files)
-              if (u.origin === location.origin || u.host === "cdnjs.cloudflare.com") {
-                const clone = res.clone();
-                caches.open(CACHE).then((c) => c.put(e.request, clone));
-              }
+            if (res.ok && (url.origin === location.origin || url.host === "cdnjs.cloudflare.com")) {
+              const clone = res.clone();
+              caches.open(CACHE).then((c) => c.put(e.request, clone));
             }
             return res;
           })
