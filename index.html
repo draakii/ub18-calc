@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>UP1B Calculator</title>
+  <meta name="description" content="UP1B tightness test calculator: installation volume, permissible pressure drop and purge volume.">
+  <meta name="theme-color" content="#10233b">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+<body>
+  <header>
+    <h1>UP1B Calculator</h1>
+    <p class="sub">Tightness Test · Installation Volume · Purge</p>
+  </header>
+
+  <main>
+    <!-- Fuel -->
+    <section class="card">
+      <h2>Fuel type</h2>
+      <div class="segmented" id="fuel" role="group" aria-label="Fuel type">
+        <button type="button" data-value="ng" class="active">Nat Gas</button>
+        <button type="button" data-value="lpg">LPG</button>
+        <button type="button" data-value="lpgair">LPG / Air</button>
+      </div>
+    </section>
+
+    <!-- Meter -->
+    <section class="card">
+      <h2>Meter type</h2>
+      <select id="meter" aria-label="Meter type">
+        <option value="e6g4">E6 / G4 (0.0024 m³)</option>
+        <option value="u6g4">U6 / G4 (0.008 m³)</option>
+        <option value="u16g10" selected>U16 / G10 (0.025 m³)</option>
+      </select>
+    </section>
+
+    <!-- Pipes -->
+    <section class="card">
+      <h2>Pipe lengths <span class="hint">(metres)</span></h2>
+      <div id="pipes"></div>
+      <button type="button" id="reset" class="ghost">Reset all</button>
+    </section>
+
+    <!-- Volumes -->
+    <section class="card">
+      <h2>Installation volumes</h2>
+      <dl class="vols">
+        <div><dt>Meter (IVm)</dt><dd id="ivm">–</dd></div>
+        <div><dt>Pipework (IVp)</dt><dd id="ivp">–</dd></div>
+        <div><dt>Fittings 10% (IVf)</dt><dd id="ivf">–</dd></div>
+        <div class="total"><dt>Total (IVt)</dt><dd id="ivt">–</dd></div>
+      </dl>
+    </section>
+
+    <!-- Results -->
+    <section class="card results" id="results" aria-live="polite">
+      <div class="result">
+        <span class="label">Tightness test with UP1B</span>
+        <span class="value" id="r-tight">–</span>
+        <span class="detail" id="r-tight-detail"></span>
+      </div>
+      <div class="result">
+        <span class="label">Maximum permissible pressure drop</span>
+        <span class="value" id="r-drop">–</span>
+      </div>
+      <div class="result">
+        <span class="label">Purge volume (1.5 × total)</span>
+        <span class="value" id="r-purge">–</span>
+        <span class="detail" id="r-purge-detail"></span>
+      </div>
+    </section>
+
+    <!-- Notes -->
+    <section class="card">
+      <details>
+        <summary>Notes</summary>
+        <p id="note"></p>
+      </details>
+    </section>
+
+    <footer>
+      <button type="button" id="copy" class="ghost">Copy Results</button>
+      <span class="foot-note">Table 3 (NG) / Table 5 (LPG) · IV limit 0.035 m³</span>
+    </footer>
+    <p class="credit">Created by Simon Lansdell</p>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

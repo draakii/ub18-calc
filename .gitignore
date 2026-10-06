@@ -1,0 +1,23 @@
+# Source spreadsheets / reference data — never push
+*.xlsx
+*.xls
+*.csv
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editors / IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# Node (if tooling is ever added)
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Local dev servers / scratch
+*.local
+.verify*.js
