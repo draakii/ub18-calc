@@ -120,4 +120,4 @@ any smell of gas — a smell is never acceptable.
 
 ---
 
-*Created by Simon Lansdell*
+*Created with 🍵 & ❤️ by Ricky Gibson for Simon Lansdell*
