@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE = "up1b-calc-v2";
+const CACHE = "up1b-calc-v3";
 const ASSETS = [
   "./",
   "index.html",
@@ -9,6 +9,7 @@ const ASSETS = [
   "manifest.webmanifest",
   "icons/icon-192.png",
   "icons/icon-512.png",
+  "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css",
 ];
 
 self.addEventListener("install", (e) => {
@@ -37,9 +38,13 @@ self.addEventListener("fetch", (e) => {
       .then((cached) => {
         const fetched = fetch(e.request)
           .then((res) => {
-            if (res.ok && new URL(e.request.url).origin === location.origin) {
-              const clone = res.clone();
-              caches.open(CACHE).then((c) => c.put(e.request, clone));
+            if (res.ok) {
+              const u = new URL(e.request.url);
+              // Cache own files + the Font Awesome CDN (css + font files)
+              if (u.origin === location.origin || u.host === "cdnjs.cloudflare.com") {
+                const clone = res.clone();
+                caches.open(CACHE).then((c) => c.put(e.request, clone));
+              }
             }
             return res;
           })

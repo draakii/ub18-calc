@@ -202,12 +202,8 @@ footer {
   vertical-align: -2px;
   color: var(--accent);
 }
-.credit .mug {
-  width: 14px;
-  height: 14px;
-  vertical-align: -2px;
-  color: var(--accent);
-}
+.text-danger { color: #dc3545; }
+.credit .fas { font-size: 0.95em; }
 .credit {
   text-align: center;
   font-size: 12px;
