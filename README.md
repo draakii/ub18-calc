@@ -121,4 +121,4 @@ any smell of gas — a smell is never acceptable.
 
 ---
 
-*Created with 🍵 & ❤️ by Ricky Gibson for Simon Lansdell*
+*Created with ☕ & ❤️ by Ricky Gibson for Simon Lansdell*
