@@ -121,4 +121,4 @@ any smell of gas — a smell is never acceptable.
 
 ---
 
-*Created with <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="15" height="12" style="vertical-align:-1px"><path fill="#dc3545" d="M96 64c0-17.7 14.3-32 32-32H448h64c70.7 0 128 57.3 128 128s-57.3 128-128 128H480c0 53-43 96-96 96H192c-53 0-96-43-96-96V64zM480 224h32c35.3 0 64-28.7 64-64s-28.7-64-64-64H480V224zM32 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/></svg> &amp; <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="13" height="13" style="vertical-align:-1px"><path fill="#dc3545" d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg> by Ricky Gibson for Simon Lansdell*
+*Created with <img src="docs/coffee.svg" alt="Tea" title="Tea" width="17"> &amp; <img src="docs/heart.svg" alt="Love" title="Love" width="15"> by Ricky Gibson for Simon Lansdell*
